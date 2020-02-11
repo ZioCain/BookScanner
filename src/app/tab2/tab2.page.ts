@@ -11,4 +11,5 @@ export class Tab2Page {
 	constructor(){
 		this.books = JSON.parse(localStorage.getItem("books")) as Book[];
 	}
+	// on view will become visible reload data from service
 }

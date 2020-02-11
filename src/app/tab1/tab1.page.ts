@@ -50,4 +50,7 @@ export class Tab1Page {
 			console.log("ERROR"+JSON.stringify(err));
 		});
 	}
+	AddToList(){
+		// append data to service
+	}
 }
