@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
+import { Book } from 'src/classes/book';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+	selector: 'app-tab2',
+	templateUrl: 'tab2.page.html',
+	styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-
-  constructor() {}
-
+	books:Book[]=[];
+	constructor(){
+		this.books = JSON.parse(localStorage.getItem("books")) as Book[];
+	}
 }
