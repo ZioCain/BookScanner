@@ -32,7 +32,6 @@ export class Tab1Page {
 		return this.http.get(URL)
 		.subscribe(data=>{
 			console.log(JSON.stringify(data));
-			this.book.retrieved = JSON.stringify(data);
 			if(typeof data["totalItems"]==="undefined" || data["totalItems"]<1) return;
 			// 9780970672681 // test ISBN
 			var volInfo = data["items"][0]["volumeInfo"];
