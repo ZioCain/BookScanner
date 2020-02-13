@@ -9,4 +9,7 @@ export class Book{
 	constructor(id?:string){
 		this.isbn = id || "";
 	}
+	toCSVEntry(){
+		return '"'+this.isbn+'","'+this.title+'","'+this.authors+'","'+this.publishedDate+'","'+this.publisher+'","'+this.pageCount+'","'+this.categories;
+	}
 }

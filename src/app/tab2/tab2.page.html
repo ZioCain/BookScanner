@@ -4,12 +4,13 @@
 			List of books
 		</ion-title>
 		<ion-buttons slot="end">
-            <ion-button (click)="export()"><ion-icon name="download"></ion-icon></ion-button>
+            <ion-button (click)="export()"><ion-icon [name]="saveIcon"></ion-icon></ion-button>
         </ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
+	<p>{{ output }}</p>
 	<p>Books in this database: {{ books.length }}</p>
 	<ion-list>
 		<ion-item-sliding *ngFor="let book of books; let i=index">
