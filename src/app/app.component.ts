@@ -16,7 +16,6 @@ export class AppComponent {
 		private statusBar: StatusBar
 	) {
 		this.initializeApp();
-		if(localStorage.getItem("books")==null) localStorage.setItem("books","[]");
 	}
 
 	initializeApp() {

@@ -8,35 +8,36 @@
 
 <ion-content>
 	<ion-button expand="full" (click)="Scan()">SCAN</ion-button>
-	<p>{{ output }}</p>
+	<p color="danger">{{ output }}</p>
 	<ion-list>
 		<ion-item>
 			<ion-label position="floating">ISBN</ion-label>
-  			<ion-input [(ngModel)]="book.isbn" type="text" [disabled]="book==null"></ion-input>
+  			<ion-input [(ngModel)]="book.isbn" type="text" [disabled]="disable"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label position="floating">Title</ion-label>
-  			<ion-input [(ngModel)]="book.title" type="text" [disabled]="book==null"></ion-input>
+  			<ion-input [(ngModel)]="book.title" type="text" [disabled]="disable"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label position="floating">Authors</ion-label>
-  			<ion-input [(ngModel)]="book.authors" type="text" [disabled]="book==null"></ion-input>
+  			<ion-input [(ngModel)]="book.authors" type="text" [disabled]="disable"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label position="floating">Publisher</ion-label>
-  			<ion-input [(ngModel)]="book.publisher" type="text" [disabled]="book==null"></ion-input>
+  			<ion-input [(ngModel)]="book.publisher" type="text" [disabled]="disable"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label position="floating">Published date</ion-label>
-  			<ion-input [(ngModel)]="book.publishedDate" type="date" [disabled]="book==null"></ion-input>
+  			<ion-input [(ngModel)]="book.publishedDate" type="text" [disabled]="disable"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label position="floating">Page count</ion-label>
-  			<ion-input [(ngModel)]="book.pageCount" type="number" [disabled]="book==null"></ion-input>
+  			<ion-input [(ngModel)]="book.pageCount" type="number" [disabled]="disable"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label position="floating">Categories</ion-label>
-  			<ion-input [(ngModel)]="book.categories" type="text" [disabled]="book==null"></ion-input>
+  			<ion-input [(ngModel)]="book.categories" type="text" [disabled]="disable"></ion-input>
 		</ion-item>
 	</ion-list>
+	<ion-button expand="full" (click)="AddToList()">ADD BOOK TO LIBRARY</ion-button>
 </ion-content>
