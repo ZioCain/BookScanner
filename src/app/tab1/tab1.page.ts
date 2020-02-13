@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Book } from 'src/classes/book';
 import { HttpClient } from '@angular/common/http';
+import { BookstorageService } from 'src/services/bookstorage.service';
 
 @Component({
 	selector: 'app-tab1',
@@ -13,10 +14,11 @@ export class Tab1Page {
 	output:string="";
 	constructor(
 		private barcodeScanner: BarcodeScanner,
-		private http:HttpClient
+		private http:HttpClient,
+		private bs:BookstorageService
 	){}
 	Scan(){
-		this.book = null;
+		this.book = new Book();
 		this.barcodeScanner.scan().then(barcodeData => {
 			this.book = new Book(barcodeData.text);
 			this.retrieveBook();
@@ -52,5 +54,7 @@ export class Tab1Page {
 	}
 	AddToList(){
 		// append data to service
+		this.bs.AddBook(this.book);
+		this.book = new Book();
 	}
 }
