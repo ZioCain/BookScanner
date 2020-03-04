@@ -59,7 +59,7 @@ export class Tab2Page {
 				this.saveIcon = "download";
 				this.output = "Error saving: "+e.toString();
 			};
-			var data = 'isbn,titolo,autore,"data pubblicazione",publisher,pagine,categorie\n';
+			var data = 'titolo,autore,"data pubblicazione",publisher,posizione\n';
 			for(var k=0; k<this.books.length; ++k){
 				data+= this.toCSVEntry(this.books[k])+ "\n";
 			}
@@ -68,6 +68,6 @@ export class Tab2Page {
 		})
 	}
 	toCSVEntry(book:Book){
-		return '"'+book.isbn+'","'+book.title+'","'+book.authors+'","'+book.publishedDate+'","'+book.publisher+'","'+book.pageCount+'","'+book.categories+'"';
+		return '"'+book.isbn+'","'+book.title+'","'+book.authors+'","'+book.publishedDate+'","'+book.publisher+'","'+book.position+'"';
 	}
 }

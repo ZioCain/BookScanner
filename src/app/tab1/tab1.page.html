@@ -8,6 +8,11 @@
 
 <ion-content>
 	<ion-button expand="full" (click)="Scan()">SCAN</ion-button>
+	<ion-item>
+		<ion-label position="floating">ISBN</ion-label>
+		<ion-input [(ngModel)]="isbn" type="text"></ion-input>
+		<ion-button expand="full" (click)="Cerca()">Search</ion-button>
+	</ion-item>
 	<p color="danger">{{ output }}</p>
 	<ion-list>
 		<ion-item>
@@ -31,12 +36,28 @@
   			<ion-input [(ngModel)]="book.publishedDate" type="text" [disabled]="disable"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label position="floating">Page count</ion-label>
-  			<ion-input [(ngModel)]="book.pageCount" type="number" [disabled]="disable"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label position="floating">Categories</ion-label>
-  			<ion-input [(ngModel)]="book.categories" type="text" [disabled]="disable"></ion-input>
+			<ion-label>Posizione nello scaffale</ion-label>
+  			<ion-select [(ngModel)]="posizione.armadio" cancelText="Cancel" okText="OK">
+				<ion-select-option value="A">A</ion-select-option>
+				<ion-select-option value="B">B</ion-select-option>
+				<ion-select-option value="C">C</ion-select-option>
+				<ion-select-option value="D">D</ion-select-option>
+				<ion-select-option value="E">E</ion-select-option>
+			</ion-select>
+			<ion-select [(ngModel)]="posizione.scaffale" cancelText="Cancel" okText="OK">
+				<ion-select-option value="1">1</ion-select-option>
+				<ion-select-option value="2">2</ion-select-option>
+				<ion-select-option value="3">3</ion-select-option>
+				<ion-select-option value="4">4</ion-select-option>
+				<ion-select-option value="5">5</ion-select-option>
+				<ion-select-option value="6">6</ion-select-option>
+				<ion-select-option value="7">7</ion-select-option>
+				<ion-select-option value="8">8</ion-select-option>
+			</ion-select>
+			<ion-select [(ngModel)]="posizione.lato" cancelText="Cancel" okText="OK">
+				<ion-select-option value="SX">Sinistro</ion-select-option>
+				<ion-select-option value="DX">Destro</ion-select-option>
+			</ion-select>
 		</ion-item>
 	</ion-list>
 	<ion-button expand="full" (click)="AddToList()">ADD BOOK TO LIBRARY</ion-button>

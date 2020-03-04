@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { Book } from 'src/classes/book';
+import { Book, Posizione } from 'src/classes/book';
 import { HttpClient } from '@angular/common/http';
 import { BookstorageService } from 'src/services/bookstorage.service';
 
@@ -13,6 +13,8 @@ export class Tab1Page {
 	disable:boolean = true;
 	book:Book=new Book();
 	output:string="";
+	isbn:string="";
+	posizione:Posizione=new Posizione();
 	constructor(
 		private barcodeScanner: BarcodeScanner,
 		private http:HttpClient,
@@ -21,18 +23,25 @@ export class Tab1Page {
 	Scan(){
 		this.book = new Book();
 		this.disable = true;
+		this.output = "";
 		this.barcodeScanner.scan().then(barcodeData => {
 			this.book = new Book(barcodeData.text);
+			this.isbn = barcodeData.text;
 			this.retrieveBook();
 		}).catch(err => {
 			console.log('Error', err);
 		});
 	}
+	Cerca(){
+		this.book = new Book(this.isbn);
+		this.disable = true;
+		this.retrieveBook();
+	}
 
 	retrieveBook(){
 		if(this.book.isbn==null || this.book.isbn=="") return;
-		var URL:string = "https://www.googleapis.com/books/v1/volumes?q=ISBN:"+this.book.isbn+"&key=AIzaSyDplx9akwTd3cTFXRIitgw8fhQKQbLEQKQ"
-		console.log("API URL FOR BOOKS "+URL);
+		var URL:string = "https://www.googleapis.com/books/v1/volumes?q=ISBN:"+this.book.isbn+"&key=AIzaSyDplx9akwTd3cTFXRIitgw8fhQKQbLEQKQ";
+		this.output = "";
 		this.http.get(URL)
 		.subscribe(data=>{
 			console.log(JSON.stringify(data));
@@ -53,11 +62,6 @@ export class Tab1Page {
 				this.book.publisher = volInfo["publisher"];
 			if(typeof volInfo["publishedDate"]!=="undefined")
 				this.book.publishedDate = volInfo["publishedDate"];
-			if(typeof volInfo["pageCount"]!=="undefined")
-				this.book.pageCount = volInfo["pageCount"];
-			if(typeof volInfo["categories"]!=="undefined")
-				for(var k=0, sep=''; k<volInfo["categories"]["length"]; ++k, sep=' & ')
-					this.book.categories = sep+volInfo["categories"][k];
 			this.disable = false;
 		},
 		err=>{
@@ -65,6 +69,7 @@ export class Tab1Page {
 		});
 	}
 	AddToList(){
+		this.book.position = this.posizione.toString();
 		// append data to service
 		this.bs.AddBook(this.book);
 		this.book = new Book();
