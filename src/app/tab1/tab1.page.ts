@@ -10,13 +10,13 @@ import { BookstorageService } from 'src/services/bookstorage.service';
 	styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-	disable:boolean = true;
-	book:Book=new Book();
-	results:Book[]=[];
-	output:string="";
-	isbn:string="";
-	posizione:Posizione=new Posizione();
-	selectedBook:number=0;
+	disable:boolean = true; // whether disable or not the inputs for book details
+	book:Book=new Book(); // the book record
+	results:Book[]=[]; // results retrieved from the google API
+	output:string=""; // error/whatever output
+	isbn:string=""; // current ISBN
+	posizione:Posizione=new Posizione(); // current shelf position
+	selectedBook:number=0; // current selected book amoung results
 	constructor(
 		private barcodeScanner: BarcodeScanner,
 		private http:HttpClient,
@@ -52,10 +52,13 @@ export class Tab1Page {
 				return;
 			}
 			this.results = [];
+			// show total amount of items found / might not be the same amount as those displayed in the select
 			this.output = data["totalItems"]+" books found.";
 			for(var bi=0; bi<data["items"]["length"]; ++bi){
+				// get volume info
 				var volInfo = data["items"][bi]["volumeInfo"];
 				var sep = "", bk:Book=new Book();
+				// setup temporary book with volume info
 				bk.title = volInfo["title"];
 				if(typeof volInfo["authors"]!=="undefined")
 					for(var k=0; k<volInfo["authors"]["length"]; ++k, sep=' & ')
@@ -77,6 +80,7 @@ export class Tab1Page {
 		});
 	}
 	AddToList(){
+		// apply book position
 		this.book.position = this.posizione.toString();
 		// append data to service
 		this.bs.AddBook(this.book);
@@ -84,6 +88,7 @@ export class Tab1Page {
 		this.disable = true;
 	}
 	ChangeBook(){
+		// show new data according to selected result
 		this.book = this.results[this.selectedBook];
 	}
 }

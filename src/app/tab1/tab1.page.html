@@ -13,7 +13,7 @@
 		<ion-input [(ngModel)]="isbn" type="tel"></ion-input>
 	</ion-item>
 	<ion-button expand="full" (click)="Cerca()">Search</ion-button>
-	<p color="danger">{{ output }}</p>
+	<p>{{ output }}</p>
 	<ion-select *ngIf="results.length>0" (ionChange)="ChangeBook()" [(ngModel)]="selectedBook" placeholder="Pick the right book">
 		<ion-select-option *ngFor="let bk of results; let i=index" [value]="i">{{ bk.title }} - {{ bk.authors }}</ion-select-option>
 	</ion-select>
