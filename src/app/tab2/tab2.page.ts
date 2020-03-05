@@ -17,11 +17,10 @@ export class Tab2Page {
 	}
 	// on view will become visible reload data from service
 	ionViewWillEnter(){
-		this.books = this.bs.GetBooks();
+		this.books = this.bs.GetBooks() as Book[];
 	}
 	delete(index:number){
 		this.bs.RemoveBook(index);
-		this.books.splice(index,1);
 	}
 	export(){
 		this.saveIcon = "hourglass";
@@ -65,9 +64,10 @@ export class Tab2Page {
 			}
 			fw.write(new Blob([data], {type: "text/csv"}));
 			this.saveIcon = "download";
+			this.output = "Exported successfully";
 		})
 	}
-	toCSVEntry(book:Book){
-		return '"'+book.isbn+'","'+book.title+'","'+book.authors+'","'+book.publishedDate+'","'+book.publisher+'","'+book.position+'"';
+	toCSVEntry(bk:Book){
+		return '"'+bk.title+'","'+bk.authors+'","'+bk.publishedDate+'","'+bk.publisher+'","'+bk.position+'","'+bk.language+'"';
 	}
 }

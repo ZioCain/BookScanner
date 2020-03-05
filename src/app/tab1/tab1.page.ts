@@ -12,9 +12,11 @@ import { BookstorageService } from 'src/services/bookstorage.service';
 export class Tab1Page {
 	disable:boolean = true;
 	book:Book=new Book();
+	results:Book[]=[];
 	output:string="";
 	isbn:string="";
 	posizione:Posizione=new Posizione();
+	selectedBook:number=0;
 	constructor(
 		private barcodeScanner: BarcodeScanner,
 		private http:HttpClient,
@@ -40,7 +42,7 @@ export class Tab1Page {
 
 	retrieveBook(){
 		if(this.book.isbn==null || this.book.isbn=="") return;
-		var URL:string = "https://www.googleapis.com/books/v1/volumes?q=ISBN:"+this.book.isbn+"&key=AIzaSyDplx9akwTd3cTFXRIitgw8fhQKQbLEQKQ";
+		var URL:string = "https://www.googleapis.com/books/v1/volumes?q=ISBN:"+this.book.isbn+"&key=AIzaSyDplx9akwTd3cTFXRIitgw8fhQKQbLEQKQ&printType=books&maxResults=40";
 		this.output = "";
 		this.http.get(URL)
 		.subscribe(data=>{
@@ -49,19 +51,25 @@ export class Tab1Page {
 				this.output = "Book was not found";
 				return;
 			}
-			this.output = "";
-			// 9780970672681 // test ISBN
-			var volInfo = data["items"][0]["volumeInfo"];
-			var sep = "";
-
-			this.book.title = volInfo["title"];
-			if(typeof volInfo["authors"]!=="undefined")
-				for(var k=0; k<volInfo["authors"]["length"]; ++k, sep=' & ')
-					this.book.authors = sep+volInfo["authors"][k];
-			if(typeof volInfo["publisher"]!=="undefined")
-				this.book.publisher = volInfo["publisher"];
-			if(typeof volInfo["publishedDate"]!=="undefined")
-				this.book.publishedDate = volInfo["publishedDate"];
+			this.results = [];
+			this.output = data["totalItems"]+" books found.";
+			for(var bi=0; bi<data["items"]["length"]; ++bi){
+				var volInfo = data["items"][bi]["volumeInfo"];
+				var sep = "", bk:Book=new Book();
+				bk.title = volInfo["title"];
+				if(typeof volInfo["authors"]!=="undefined")
+					for(var k=0; k<volInfo["authors"]["length"]; ++k, sep=' & ')
+						bk.authors = sep+volInfo["authors"][k];
+				if(typeof volInfo["publisher"]!=="undefined")
+					bk.publisher = volInfo["publisher"];
+				if(typeof volInfo["publishedDate"]!=="undefined")
+					bk.publishedDate = volInfo["publishedDate"].substr(0,4);
+				if(typeof volInfo["language"]!=="undefined")
+					bk.language = volInfo["language"];
+				this.results.push(bk);
+			}
+			this.selectedBook = 0;
+			this.book = this.results[0];
 			this.disable = false;
 		},
 		err=>{
@@ -74,5 +82,8 @@ export class Tab1Page {
 		this.bs.AddBook(this.book);
 		this.book = new Book();
 		this.disable = true;
+	}
+	ChangeBook(){
+		this.book = this.results[this.selectedBook];
 	}
 }

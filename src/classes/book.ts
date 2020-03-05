@@ -13,10 +13,11 @@ export class Book{
 	publisher:string="";
 	publishedDate:string="";
 	position:string="";
+	language:string="";
 	constructor(id?:string){
 		this.isbn = id || "";
 	}
 	toCSVEntry(){
-		return '"'+this.title+'","'+this.authors+'","'+this.publishedDate+'","'+this.publisher+'","'+this.pageCount+'","'+this.position+'"';
+		return '"'+this.title+'","'+this.authors+'","'+this.publishedDate+'","'+this.publisher+'","'+this.position+'","'+this.language+'"';
 	}
 }

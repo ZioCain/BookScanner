@@ -10,10 +10,13 @@
 	<ion-button expand="full" (click)="Scan()">SCAN</ion-button>
 	<ion-item>
 		<ion-label position="floating">ISBN</ion-label>
-		<ion-input [(ngModel)]="isbn" type="text"></ion-input>
-		<ion-button expand="full" (click)="Cerca()">Search</ion-button>
+		<ion-input [(ngModel)]="isbn" type="tel"></ion-input>
 	</ion-item>
+	<ion-button expand="full" (click)="Cerca()">Search</ion-button>
 	<p color="danger">{{ output }}</p>
+	<ion-select *ngIf="results.length>0" (ionChange)="ChangeBook()" [(ngModel)]="selectedBook" placeholder="Pick the right book">
+		<ion-select-option *ngFor="let bk of results; let i=index" [value]="i">{{ bk.title }} - {{ bk.authors }}</ion-select-option>
+	</ion-select>
 	<ion-list>
 		<ion-item>
 			<ion-label position="floating">ISBN</ion-label>
@@ -34,6 +37,10 @@
 		<ion-item>
 			<ion-label position="floating">Published date</ion-label>
   			<ion-input [(ngModel)]="book.publishedDate" type="text" [disabled]="disable"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label position="floating">Language</ion-label>
+  			<ion-input [(ngModel)]="book.language" type="text" [disabled]="disable"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>Posizione nello scaffale</ion-label>
