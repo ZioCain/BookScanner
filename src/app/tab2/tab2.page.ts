@@ -29,7 +29,7 @@ export class Tab2Page {
 		this.output = "Exporting to CSV...";
 		// setup for saving data to CSV file
 		window.requestFileSystem(1, 0, (fs)=>{
-			window.resolveLocalFileSystemURL(cordova["file"]["externalApplicationStorageDirectory"], async dirEntry => {
+			window.resolveLocalFileSystemURL('file:///storage/emulated/0/Download/', async dirEntry => {
 				dirEntry.getFile("books.csv", {create:true}, (fe)=>{
 					this.writeFile(fe);
 				}, (err)=>{
